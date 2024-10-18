@@ -1,0 +1,68 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>$(TargetFrameworkNetStandard);$(TargetFrameworkNet6);$(TargetFrameworkNet8)</TargetFrameworks>
+		<Authors>Sébastien Pertus</Authors>
+		<Company>Microsoft</Company>
+		<RootNamespace>Dotmim.Sync</RootNamespace>
+		<Title>Dotmim.Sync.Core</Title>
+		<Summary>Manage a sync process beetween two relational databases provider. Core assembly .Net Standard 2.0</Summary>
+		<Description>Dotmim Sync core assembly. Manage a sync process beetween two relational databases provider. Can't be used alone. Choose a server and a client provider such as Dotmim.Sync.SqlServerProvider or Dotmim.Sync.SqliteProvider</Description>
+		<RepositoryType>git</RepositoryType>
+		<ApplicationIcon>favicon.ico</ApplicationIcon>
+		<PackageIcon>packageIcon.png</PackageIcon>
+		<OutputType>Library</OutputType>
+		<AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+	</PropertyGroup>
+	<PropertyGroup>
+		<AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
+	</PropertyGroup>
+	<!--generate NUGET package including symbols ans source on each release build -->
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<IncludeSource>True</IncludeSource>
+		<IncludeSymbols>True</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	</PropertyGroup>
+	<PropertyGroup>
+	  <NoWarn>$(NoWarn)</NoWarn>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Remove="Serialization\DmBinaryConverter\**" />
+		<EmbeddedResource Remove="Serialization\DmBinaryConverter\**" />
+		<None Remove="Serialization\DmBinaryConverter\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\docs\assets\packageIcon.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<PackageReference Include="System.Text.Json" Version="8.0.4" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == '$(TargetFrameworkNet6)'">
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == '$(TargetFrameworkNet8)'">
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == '$(TargetFrameworkNetStandard)' ">
+		<PackageReference Include="System.Threading.Tasks.Dataflow" Version="8.0.0" />
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Build.Tasks.Core" Version="17.9.5" />
+		<PackageReference Include="Microsoft.Build.Tasks.Git" Version="8.0.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
+	</ItemGroup>
+
+</Project>
